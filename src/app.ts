@@ -13,10 +13,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-// app.use('/api/v1', routes);
+
 app.get("/",(req,res)=>{
-  res.send("Server started Successfully!")
-})
+  res.send("Gateway Server started Successfully!")
+});
+
+app.use('/api/v1', routes);
 
 app.use(globalExceptionHandler);
 
