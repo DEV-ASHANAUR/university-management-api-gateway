@@ -87,11 +87,8 @@ const createAdmin = async (req: Request): Promise<IGenericResponse> => {
   const uploadedProfileImage = await FileUploaderHelper.uploadToCloudinary(file);
 
   if (uploadedProfileImage) {
-    console.log("upload image",uploadedProfileImage)
     req.body.admin.profileImage = uploadedProfileImage.secure_url;
   }
-
-  console.log("all log",req.body);
 
   const response: IGenericResponse = await AuthService.post('/users/create-admin', req.body, {
     headers: {
