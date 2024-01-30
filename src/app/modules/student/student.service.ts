@@ -66,7 +66,32 @@ const getStudentProfile = async (req: Request): Promise<IGenericResponse> => {
 
 const updateOneInDB = async (req: Request): Promise<IGenericResponse> => {
   const { id } = req.params;
-  console.log(id)
+  const { academicDepartment, academicFaculty, academicSemester } = req.body;
+
+  const academicDepartmentResponse = await AuthService.get(
+    `/academic-departments?syncId=${academicDepartment}`
+  );
+
+  if (academicDepartmentResponse.data && Array.isArray(academicDepartmentResponse.data)) {
+    req.body.academicDepartment = academicDepartmentResponse.data[0].id;
+  }
+
+  const academicFacultyResponse = await AuthService.get(
+    `/academic-faculties?syncId=${academicFaculty}`
+  );
+
+  if (academicFacultyResponse.data && Array.isArray(academicFacultyResponse.data)) {
+    req.body.academicFaculty = academicFacultyResponse.data[0].id;
+  }
+
+  const academicSemesterResponse = await AuthService.get(
+    `/academic-semester?syncId=${academicSemester}`
+  );
+
+  if (academicSemesterResponse.data && Array.isArray(academicSemesterResponse.data)) {
+    req.body.academicSemester = academicSemesterResponse.data[0].id;
+  }
+
   const response: IGenericResponse = await AuthService.patch(`/students/${id}`, req.body, {
     headers: {
       Authorization: req.headers.authorization
