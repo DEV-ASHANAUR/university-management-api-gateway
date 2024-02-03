@@ -10,14 +10,14 @@ const router = express.Router();
 router.get('/', StudentEnrolledCourseMarkController.getAllFromDB);
 router.get('/my-marks', StudentEnrolledCourseMarkController.getStudentMarks);
 
-router.post(
+router.patch(
   '/update-marks',
   validateRequest(StudentEnrolledCourseMarkValidation.updateStudentMarks),
   auth(ENUM_USER_ROLE.FACULTY),
   StudentEnrolledCourseMarkController.updateMarks
 );
 
-router.post(
+router.patch(
   '/update-course-final-marks',
   validateRequest(StudentEnrolledCourseMarkValidation.updateStudentCourseFinalMarks),
   auth(ENUM_USER_ROLE.FACULTY),
